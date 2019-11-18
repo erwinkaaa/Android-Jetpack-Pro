@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviecatalogue.R
+import com.example.moviecatalogue.repository.local.entity.MovieEntity
 import com.example.moviecatalogue.repository.remote.api.ApiRepository
-import com.example.moviecatalogue.repository.remote.response.movie.MovieEntity
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.inflater_film.view.*

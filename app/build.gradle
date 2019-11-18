@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -30,6 +32,10 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 androidExtensions {
@@ -53,7 +59,18 @@ dependencies {
 
     // Dependencies for life cycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifeCycleVersion"
+//    implementation "androidx.lifecycle:lifecycle-common-java8:$lifeCycleVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifeCycleVersion"
+
+    // Dependencies for paging
+    implementation 'androidx.paging:paging-runtime:2.1.0'
+
+    // Dependencies for room
+    implementation 'androidx.room:room-runtime:2.2.1'
+    annotationProcessor 'androidx.room:room-compiler:2.2.1'
+    androidTestImplementation 'androidx.room:room-testing:2.2.1'
+    kapt "androidx.room:room-compiler:2.2.1" // use kapt for Kotlin
 
     // Dependencies for anko
     implementation "org.jetbrains.anko:anko:$ankoVersion"

@@ -3,8 +3,11 @@ package com.example.moviecatalogue.ui.tvshow
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.moviecatalogue.repository.local.entity.TvEntity
 import com.example.moviecatalogue.repository.main.MainRepository
-import com.example.moviecatalogue.repository.remote.response.tv.TVShowEntity
+import com.example.moviecatalogue.repository.vo.Resource
+import com.example.moviecatalogue.util.LiveDataTestUtil
+import junit.framework.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,15 +33,18 @@ class TVShowViewModelTest {
     @Suppress("UNCHECKED_CAST")
     @Test
     fun getTVShows() {
-        val dummy = listOf<TVShowEntity>()
-        val dataTVShows = MutableLiveData<List<TVShowEntity>>()
-        dataTVShows.value = dummy
+        val dummy = Resource.success(listOf<TvEntity>())
+        val dataTv = MutableLiveData<Resource<List<TvEntity>>>()
+        dataTv.value = dummy
 
-        `when`(mainRepository.getTVShows()).thenReturn(dataTVShows)
-        tvShowViewModel.getLiveDataMovies().observeForever(observer as Observer<List<TVShowEntity>>)
+        `when`(mainRepository.getTVShows()).thenReturn(dataTv)
+
+        tvShowViewModel.insertBait()
+        tvShowViewModel.tv.observeForever(observer as Observer<Resource<List<TvEntity>>>)
+
+        val result = LiveDataTestUtil.getValue(tvShowViewModel.tv)
 
         verify(observer).onChanged(dummy)
-        verify(mainRepository).getTVShows()
-        verify(mainRepository).liveTVShows
+        assertNotNull(result.data)
     }
 }

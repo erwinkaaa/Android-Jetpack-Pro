@@ -7,9 +7,15 @@
 
     <string name="bottom_menu_movies">Movies</string>
     <string name="bottom_menu_tvshow">TV Show</string>
+    <string name="bottom_menu_favorite">Favorite</string>
 
     <string name="releasedate">Release Date</string>
-    <string name="durationtime">Duration Time</string>
-    <string name="distributedby">Distributed By</string>
+    <string name="vote_average">Vote Average</string>
+    <string name="popularity">Popularity</string>
     <string name="description">Description</string>
+
+    <string name="added_to_favorite">Added to Favorite</string>
+    <string name="removed_from_favorite">Removed from Favorite</string>
+
+    <string name="empty_notice">No Data</string>
 </resources>

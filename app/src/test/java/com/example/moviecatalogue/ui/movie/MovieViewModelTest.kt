@@ -3,8 +3,11 @@ package com.example.moviecatalogue.ui.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.moviecatalogue.repository.local.entity.MovieEntity
 import com.example.moviecatalogue.repository.main.MainRepository
-import com.example.moviecatalogue.repository.remote.response.movie.MovieEntity
+import com.example.moviecatalogue.repository.vo.Resource
+import com.example.moviecatalogue.util.LiveDataTestUtil
+import junit.framework.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -15,7 +18,7 @@ class MovieViewModelTest {
 
     private lateinit var movieViewModel: MovieViewModel
     private val mainRepository = mock(MainRepository::class.java)
-    private val observer = mock(Observer::class.java)
+    private val observer = mock(Observer::class.java) as Observer<*>
 
     @Rule
     @JvmField
@@ -30,15 +33,18 @@ class MovieViewModelTest {
     @Suppress("UNCHECKED_CAST")
     @Test
     fun getMovies() {
-        val dummy = listOf<MovieEntity>()
-        val dataMovies = MutableLiveData<List<MovieEntity>>()
+        val dummy = Resource.success(listOf<MovieEntity>())
+        val dataMovies = MutableLiveData<Resource<List<MovieEntity>>>()
         dataMovies.value = dummy
 
         `when`(mainRepository.getMovies()).thenReturn(dataMovies)
-        movieViewModel.getLiveDataMovies().observeForever(observer as Observer<List<MovieEntity>>)
+
+        movieViewModel.insertBait()
+        movieViewModel.movies.observeForever(observer as Observer<Resource<List<MovieEntity>>>)
+
+        val result = LiveDataTestUtil.getValue(movieViewModel.movies)
 
         verify(observer).onChanged(dummy)
-        verify(mainRepository).getMovies()
-        verify(mainRepository).liveMovies
+        assertNotNull(result.data)
     }
 }

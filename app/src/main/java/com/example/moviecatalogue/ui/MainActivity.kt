@@ -3,6 +3,7 @@ package com.example.moviecatalogue.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.moviecatalogue.R
+import com.example.moviecatalogue.ui.favorite.FavoriteFragment
 import com.example.moviecatalogue.ui.movie.MovieFragment
 import com.example.moviecatalogue.ui.tvshow.TVShowFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.tvshows -> {
                     loadTvShowFragment()
+                }
+                R.id.favorite -> {
+                    loadFavoriteFragment()
                 }
             }
             true
@@ -56,6 +60,14 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.mainFrame,
                 TVShowFragment(), TVShowFragment::class.java.simpleName)
+            .commit()
+    }
+
+    private fun loadFavoriteFragment() {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFrame,
+                FavoriteFragment(), FavoriteFragment::class.java.simpleName)
             .commit()
     }
 }

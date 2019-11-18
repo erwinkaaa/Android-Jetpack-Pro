@@ -1,3 +1,3 @@
 package com.example.moviecatalogue.repository.remote.response.tv
 
-data class TVShowResponse(val results: List<TVShowEntity>)
+data class TVShowResponse(val results: List<TvModel>)

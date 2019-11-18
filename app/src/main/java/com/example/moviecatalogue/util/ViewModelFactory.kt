@@ -1,9 +1,12 @@
 package com.example.moviecatalogue.util
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.moviecatalogue.repository.main.MainRepository
 import com.example.moviecatalogue.ui.detail.DetailViewModel
+import com.example.moviecatalogue.ui.favorite.movie.FavoriteMovieViewModel
+import com.example.moviecatalogue.ui.favorite.tvshow.FavoriteTVShowViewModel
 import com.example.moviecatalogue.ui.movie.MovieViewModel
 import com.example.moviecatalogue.ui.tvshow.TVShowViewModel
 
@@ -13,10 +16,10 @@ class ViewModelFactory(private val mainRepository: MainRepository) :
 
     companion object {
         private lateinit var instance: ViewModelFactory
-        fun getInstance(): ViewModelFactory {
+        fun getInstance(application: Application): ViewModelFactory {
             synchronized(ViewModelFactory::class.java) {
                 instance =
-                    ViewModelFactory(Injection.provideRepository())
+                    ViewModelFactory(Injection.provideRepository(application))
             }
             return instance
         }
@@ -33,6 +36,12 @@ class ViewModelFactory(private val mainRepository: MainRepository) :
             }
             DetailViewModel::class.java -> {
                 return DetailViewModel(mainRepository) as T
+            }
+            FavoriteMovieViewModel::class.java -> {
+                return FavoriteMovieViewModel(mainRepository) as T
+            }
+            FavoriteTVShowViewModel::class.java -> {
+                return FavoriteTVShowViewModel(mainRepository) as T
             }
         }
 

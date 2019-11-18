@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 @Suppress("UNCHECKED_CAST")
 object LiveDataTestUtil {
-    fun <T> getValue(liveData: LiveData<T>): T {
+    fun <T> getValue(liveData: LiveData<T>?): T {
         val data = arrayOfNulls<Any>(1)
         val latch = CountDownLatch(1)
 
@@ -15,11 +15,11 @@ object LiveDataTestUtil {
             override fun onChanged(o: T) {
                 data[0] = o
                 latch.countDown()
-                liveData.removeObserver(this)
+                liveData?.removeObserver(this)
             }
         }
 
-        liveData.observeForever(observer)
+        liveData?.observeForever(observer)
 
         try {
             latch.await(2, TimeUnit.SECONDS)

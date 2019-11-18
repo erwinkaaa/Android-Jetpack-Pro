@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moviecatalogue.R
+import com.example.moviecatalogue.repository.local.entity.TvEntity
 import com.example.moviecatalogue.repository.remote.api.ApiRepository
-import com.example.moviecatalogue.repository.remote.response.tv.TVShowEntity
 import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.inflater_film.view.*
 
 class TVShowAdapter(
     private val context: Context,
-    private val data: MutableList<TVShowEntity>,
-    private val onClickListener: (TVShowEntity) -> Unit
+    private val data: MutableList<TvEntity>,
+    private val onClickListener: (TvEntity) -> Unit
 ) :
     RecyclerView.Adapter<TVShowAdapter.ViewHolder>() {
 
-    fun setData(data: List<TVShowEntity>) {
+    fun setData(data: List<TvEntity>) {
         this.data.clear()
         this.data.addAll(data)
         this.notifyDataSetChanged()
@@ -42,8 +42,8 @@ class TVShowAdapter(
         LayoutContainer {
 
         fun bindItem(
-            data: TVShowEntity,
-            onClickListener: (TVShowEntity) -> Unit
+            data: TvEntity,
+            onClickListener: (TvEntity) -> Unit
         ) {
             itemView.tv_title.text = data.name
             Picasso.get().load(ApiRepository.IMAGE_URL + data.poster_path).into(itemView.iv_poster)

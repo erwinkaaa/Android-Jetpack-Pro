@@ -2,8 +2,6 @@ package com.example.moviecatalogue.util
 
 import android.view.View
 
-const val TAG = "JetpackPro"
-
 fun View.visible() {
     visibility = View.VISIBLE
 }
